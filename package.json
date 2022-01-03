@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/suhyeon1740/node-bird#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.6",
     "dotenv": "^10.0.0",
     "express": "^4.17.2",
@@ -27,6 +28,9 @@
     "multer": "^1.4.4",
     "mysql2": "^2.3.3",
     "nunjucks": "^3.2.3",
+    "passport": "^0.5.2",
+    "passport-kakao": "^1.0.1",
+    "passport-local": "^1.0.0",
     "sequelize": "^7.0.0-alpha.4",
     "sequelize-cli": "^6.3.0"
   },
