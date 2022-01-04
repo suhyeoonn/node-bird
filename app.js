@@ -70,3 +70,8 @@ app.use((err, req, res, next) => {
 app.listen(app.get("port"), () => {
   console.log(app.get("port"), "번 포트 대기중")
 })
+
+// TODO: 프로필 정보 변경하기
+// TODO: 게시글 좋아요 누르기 및 좋아요 취소하기
+// TODO: 게시글 삭제하기
+// TODO: 매번 데이터베이스를 조회하지 않도록 deserializeUser 캐싱하기

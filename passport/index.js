@@ -6,13 +6,15 @@ const User = require("../models/user")
 module.exports = () => {
   // 로그인 시 실행되며, req.session 객체에 어떤 데이터를 저장할지 정함 (done의 두번째 인수)
   passport.serializeUser((user, done) => {
+    console.log("serializeUser")
     done(null, user.id)
   })
 
   // 매 요청 시 실행.
   passport.deserializeUser((id, done) => {
+    console.log("deserializeUser")
     User.findOne({
-      where: id,
+      where: { id },
       include: [
         {
           model: User,
