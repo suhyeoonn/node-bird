@@ -45,7 +45,8 @@ router.post("/", isLoggedIn, upload2.none(), async (req, res, next) => {
     if (hashtags) {
       const result = await Promise.all(
         hashtags.map((tag) => {
-          return Hashtag.findOrCreate({ // db에 해시태그가 존재하면 가져오고, 존재하지 않으면 생성한 후 가져옴
+          return Hashtag.findOrCreate({
+            // db에 해시태그가 존재하면 가져오고, 존재하지 않으면 생성한 후 가져옴
             where: { title: tag.slice(1).toLowerCase() },
           })
         })
@@ -59,4 +60,13 @@ router.post("/", isLoggedIn, upload2.none(), async (req, res, next) => {
   }
 })
 
+router.delete("/:id", isLoggedIn, async (req, res, next) => {
+  try {
+    await Post.destroy({ where: { id: req.params.id } })
+    res.send("success")
+  } catch (error) {
+    console.error(error)
+    next(error)
+  }
+})
 module.exports = router

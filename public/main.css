@@ -90,6 +90,7 @@ input[type='text'], input[type='email'], input[type='password'], textarea {
   margin-bottom: 10px;
 }
 .twit-author { display: inline-block; font-weight: bold; margin-right: 10px; }
+.twit-content { white-space: pre-wrap; }
 .twit-follow {
   padding: 1px 5px;
   background: #fff;
