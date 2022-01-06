@@ -38,6 +38,12 @@
       <div class="twit-content">{{twit.content}}</div>
       {% if twit.img %}
       <div class="twit-img"><img src="{{twit.img}}" alt="섬네일" /></div>
+      {% endif %} 
+      {% set like=twit.Liker.includes(user.id) %} 
+      {% if user and twit.User.id !== user.id and like !== true %}
+      <button class="post-like">😍</button>
+      {% endif %} {% if like %}
+      <button class="post-unlike">😍</button>
       {% endif %}
     </div>
     {% endfor %}
@@ -99,6 +105,29 @@
       const id = btn.parentNode.querySelector(".twit-id").value
       axios
         .delete(`/post/${id}`)
+        .then(() => {
+          location.reload()
+        })
+        .catch(console.error)
+    })
+  })
+
+  document.querySelectorAll(".post-like").forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      const id = btn.parentNode.querySelector(".twit-id").value
+      axios
+        .post(`/post/${id}/like`)
+        .then(() => {
+          location.reload()
+        })
+        .catch(console.error)
+    })
+  })
+  document.querySelectorAll(".post-unlike").forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      const id = btn.parentNode.querySelector(".twit-id").value
+      axios
+        .delete(`/post/${id}/like`)
         .then(() => {
           location.reload()
         })

@@ -69,4 +69,33 @@ router.delete("/:id", isLoggedIn, async (req, res, next) => {
     next(error)
   }
 })
+
+router.post("/:id/like", isLoggedIn, async (req, res, next) => {
+  try {
+    const post = await Post.findOne({ where: { id: req.params.id } })
+    if (post) {
+      await post.addLiker(parseInt(req.user.id, 10))
+      res.send("success")
+    } else {
+      res.status(404).send("no post")
+    }
+  } catch (error) {
+    console.error(error)
+    next(error)
+  }
+})
+router.delete("/:id/like", isLoggedIn, async (req, res, next) => {
+  try {
+    const post = await Post.findOne({ where: { id: req.params.id } })
+    if (post) {
+      await post.removeLiker(parseInt(req.user.id, 10))
+      res.send("success")
+    } else {
+      res.status(404).send("no post")
+    }
+  } catch (error) {
+    console.error(error)
+    next(error)
+  }
+})
 module.exports = router
