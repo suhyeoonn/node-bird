@@ -17,6 +17,38 @@
           <div>{{follower.nick}}</div>
         {% endfor %}
       {% endif %}
+    </div>    
+  </div>  
+  <form id="profile-form" action="/{{user.id}}" method="patch">
+    <input type="hidden" value="{{user.id}}" name="userId" />
+    <div class="input-group">
+      <label for="email">이메일</label>
+      <input id="email" type="email" name="email" value="{{user.email}}" disabled>
     </div>
-  </div>
+    <div class="input-group">
+      <label for="join-nick">닉네임</label>
+      <input id="join-nick" type="text" name="nick" value="{{user.nick}}"></div>
+    <div class="input-group">
+    <div class="input-group">
+      <label for="password">비밀번호</label>
+      <input id="password" type="password" name="password" required>
+    </div>
+    <button id="login" type="submit" class="btn">수정</button>
+  </form>
+  <script>
+    document.querySelector('#profile-form').addEventListener('submit', function(e) {
+      e.preventDefault()
+      axios.patch(`/user/${this.userId.value}`, 
+        {
+          nick: this.nick.value, 
+          email: this.email.value, 
+          password: this.password.value
+        })
+      .then(() => {
+        location.reload()
+      }).catch(err => {
+        alert(err.response.data)
+      })
+    })
+  </script>
 {% endblock %}

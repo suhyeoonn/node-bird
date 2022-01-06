@@ -1,4 +1,5 @@
 const express = require("express")
+const passport = require("passport")
 
 const { isLoggedIn } = require("./middlewares")
 const User = require("../models/user")
@@ -29,6 +30,27 @@ router.delete("/:id/follow", isLoggedIn, async (req, res, next) => {
     } else {
       res.status(404).send("no user")
     }
+  } catch (err) {
+    console.error(err)
+    next(err)
+  }
+})
+
+router.patch("/:id", isLoggedIn, (req, res, next) => {
+  const { nick } = req.body
+  try {
+    passport.authenticate("local", async (authError, user, info) => {
+      if (authError) {
+        console.error(authError)
+        return next(authError)
+      }
+      if (!user) {
+        res.status(404).send(info.message)
+        return
+      }
+      await User.update({ nick }, { where: { id: req.params.id } })
+      res.send("success")
+    })(req, res, next)
   } catch (err) {
     console.error(err)
     next(err)
